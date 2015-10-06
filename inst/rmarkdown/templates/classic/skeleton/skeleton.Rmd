@@ -1,0 +1,11 @@
+---
+title: "title"
+author: "kevin caye"
+date: "24 août 2015"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+knitr::opts_chunk$set(autodep=TRUE)
+```
