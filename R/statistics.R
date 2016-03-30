@@ -78,7 +78,7 @@ trueTPandFDR <- function( p.values, alphaValues, outliers ) {
 #'
 #' @export
 SNPspectrum <- function( genotype, allele = 1 ) {
-  return(table(apply( data$genotype, MARGIN = 2, FUN = function(x) sum(x==allele))) )
+  return(table(apply( genotype, MARGIN = 2, FUN = function(x) sum(x==allele))) )
 }
 
 #' The folded allele frequency spectrum
@@ -87,7 +87,7 @@ SNPspectrum <- function( genotype, allele = 1 ) {
 #'
 #' @export
 SNPfoldedspectrum <- function( genotype ) {
-  return(table( apply( data$genotype, MARGIN = 2, FUN = function(x) min(sum(x==1),sum(x==0))) ) )
+  return(table( apply( genotype, MARGIN = 2, FUN = function(x) min(sum(x==1),sum(x==0))) ) )
 }
 
 #' Power and Fdr

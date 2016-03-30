@@ -279,7 +279,7 @@ lfmm_logit_sample <- function(n,
                                mean_B_outlier = 0.5,
                                cor_U1_X = 0.5) {
 
-
+cat("TODO : debug !!")
   G = matrix(0.0,n,L)
   Id_k = diag(K)
 
@@ -324,3 +324,38 @@ lfmm_logit_sample <- function(n,
   return(list( G = G, X = X, outlier = outlier ))
 
 }
+
+
+#' Sample a normaly distributed variable X such that cor(X,Y) = c
+#'
+#'
+#'
+#' @export
+sample_correlated_X <- function( Y, c, mu = 0.0, sd = 1.0 ) {
+  n = length(Y)
+  # Generate X
+  theta <- acos(c)             # corresponding angle
+  aux2    <- rnorm(n, mu, sd)      # new random data
+  aux     <- cbind(Y, aux2)         # matrix
+  auxctr  <- scale(aux, center=TRUE, scale=FALSE)   # centered columns (mean 0)
+
+  Id   <- diag(n)                               # identity matrix
+  Q    <- qr.Q(qr(auxctr[ , 1, drop=FALSE]))      # QR-decomposition, just matrix Q
+  P    <- tcrossprod(Q)          # = Q Q'       # projection onto space defined by x1
+  aux2o  <- (Id-P) %*% auxctr[ , 2]                 # x2ctr made orthogonal to x1ctr
+  auxc2  <- cbind(auxctr[ , 1], aux2o)                # bind to matrix
+  auxY    <- auxc2 %*% diag(1/sqrt(colSums(auxc2^2)))  # scale columns to length 1
+
+  X <- auxY[ , 2] + (1 / tan(theta)) * auxY[ , 1]     # final new vector
+  X = (X-mean(X))/sd(X)# ~ N(0,1)
+  X= X * sd + mu # ~ N(mu,sd)
+  return(X)
+
+}
+
+
+
+
+
+
+

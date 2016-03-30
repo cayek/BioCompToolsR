@@ -16,7 +16,7 @@ plotPc <- function( genotype, scale = FALSE, xpcindex = 1, ypcindex = 2, ... ) {
 #'
 #' @export
 plotSNPfoldedspectrum <- function( genotype ) {
-  spectrum = apply( data$genotype, MARGIN = 2, FUN = function(x) min(sum(x==1),sum(x==0)))
+  spectrum = apply( genotype, MARGIN = 2, FUN = function(x) min(sum(x==1),sum(x==0)))
   plot(table(spectrum))
 }
 
@@ -28,7 +28,7 @@ plotSNPfoldedspectrum <- function( genotype ) {
 #'
 #' @export
 plotSNPspectrum <- function( genotype, allele = 1 ) {
-  spectrum = apply( data$genotype, MARGIN = 2, FUN = function(x) sum(x==allele))
+  spectrum = apply( genotype, MARGIN = 2, FUN = function(x) sum(x==allele))
   plot(table(spectrum))
 }
 
